@@ -1,0 +1,61 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+api
+wscc-api
+member-api
+import-baseline
+import-baseline-api
+
+# Test binary
+*.test
+
+# Coverage
+*.out
+coverage.out
+
+# Dependencies
+vendor/
+
+# Go workspace
+go.work
+
+# Environment
+.env
+.env.*
+*.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temp
+tmp/
+temp/
+*.tmp
+
+# Credentials
+creds/
+secrets/
+*.key
+*.pem
+*.crt
+
+# Build
+bin/
+dist/
+build/

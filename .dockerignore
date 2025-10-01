@@ -1,0 +1,9 @@
+.git
+.cache
+tmp
+bin
+legacy-python
+**/*.py
+*.log
+.coverage
+venv

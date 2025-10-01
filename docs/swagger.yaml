@@ -1,0 +1,21 @@
+basePath: /
+host: your-server-ip
+info:
+  contact:
+    email: your-email@example.com
+    name: API Support
+  description: A member lookup service for searching members by UBC number or SSN
+  license:
+    name: MIT
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Organization Member Lookup API
+  version: "1.0"
+paths: {}
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and API key.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,339 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "A complete member management and metrics tracking API for WSCC automation",
+        "title": "WSCC Member Management API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "email": "your-email@example.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "24.144.84.159",
+    "basePath": "/",
+    "paths": {
+        "/healthz": {
+            "get": {
+                "description": "Health check endpoint for liveness probe",
+                "tags": ["Health"],
+                "summary": "Health check",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/members": {
+            "post": {
+                "security": [{"BearerAuth": []}],
+                "description": "Create a new member record in the system",
+                "tags": ["Members"],
+                "summary": "Create a new member",
+                "parameters": [
+                    {
+                        "description": "Member data",
+                        "name": "member",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "first_name": {"type": "string"},
+                                "last_name": {"type": "string"},
+                                "email": {"type": "string"},
+                                "phone_number": {"type": "string"},
+                                "address": {"type": "string"},
+                                "city": {"type": "string"},
+                                "state": {"type": "string"},
+                                "zip_code": {"type": "string"},
+                                "ssn": {"type": "string"}
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Member created successfully",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "member_id": {"type": "string"},
+                                "message": {"type": "string"}
+                            }
+                        }
+                    },
+                    "400": {"description": "Bad Request"},
+                    "401": {"description": "Unauthorized"},
+                    "500": {"description": "Internal Server Error"}
+                }
+            }
+        },
+        "/members/{id}": {
+            "get": {
+                "security": [{"BearerAuth": []}],
+                "description": "Retrieve member information by UBC ID or SSN",
+                "tags": ["Members"],
+                "summary": "Get member by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Member ID (UBC ID or SSN)",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Return full SSN (default: last 4 digits)",
+                        "name": "fullSSN",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Member found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "member_id": {"type": "string"},
+                                "first_name": {"type": "string"},
+                                "last_name": {"type": "string"},
+                                "email": {"type": "string"},
+                                "phone_number": {"type": "string"},
+                                "address": {"type": "string"},
+                                "city": {"type": "string"},
+                                "state": {"type": "string"},
+                                "zip_code": {"type": "string"},
+                                "ssn": {"type": "string"}
+                            }
+                        }
+                    },
+                    "400": {"description": "Bad Request"},
+                    "401": {"description": "Unauthorized"},
+                    "404": {"description": "Member not found"},
+                    "500": {"description": "Internal Server Error"}
+                }
+            },
+            "put": {
+                "security": [{"BearerAuth": []}],
+                "description": "Update member information by UBC ID or SSN",
+                "tags": ["Members"],
+                "summary": "Update an existing member",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Member ID (UBC ID or SSN)",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Updated member data",
+                        "name": "member",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "first_name": {"type": "string"},
+                                "last_name": {"type": "string"},
+                                "email": {"type": "string"},
+                                "phone_number": {"type": "string"},
+                                "address": {"type": "string"},
+                                "city": {"type": "string"},
+                                "state": {"type": "string"},
+                                "zip_code": {"type": "string"}
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Member updated successfully",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "member_id": {"type": "string"},
+                                "message": {"type": "string"}
+                            }
+                        }
+                    },
+                    "400": {"description": "Bad Request"},
+                    "401": {"description": "Unauthorized"},
+                    "404": {"description": "Member not found"},
+                    "500": {"description": "Internal Server Error"}
+                }
+            },
+            "delete": {
+                "security": [{"BearerAuth": []}],
+                "description": "Delete member record by UBC ID or SSN",
+                "tags": ["Members"],
+                "summary": "Delete a member",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Member ID (UBC ID or SSN)",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {"description": "Member deleted successfully"},
+                    "400": {"description": "Bad Request"},
+                    "401": {"description": "Unauthorized"},
+                    "404": {"description": "Member not found"},
+                    "500": {"description": "Internal Server Error"}
+                }
+            }
+        },
+        "/metrics/performance": {
+            "post": {
+                "security": [{"BearerAuth": []}],
+                "description": "Record performance metrics for automation tasks",
+                "tags": ["Metrics"],
+                "summary": "Record performance metrics",
+                "parameters": [
+                    {
+                        "description": "Performance metrics data",
+                        "name": "metrics",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "task_name": {"type": "string"},
+                                "execution_time_ms": {"type": "integer"},
+                                "records_processed": {"type": "integer"},
+                                "success": {"type": "boolean"},
+                                "error_message": {"type": "string"}
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {"description": "Metrics recorded successfully"},
+                    "400": {"description": "Bad Request"},
+                    "401": {"description": "Unauthorized"},
+                    "500": {"description": "Internal Server Error"}
+                }
+            }
+        },
+        "/metrics/value": {
+            "post": {
+                "security": [{"BearerAuth": []}],
+                "description": "Record value metrics for cost savings calculations",
+                "tags": ["Metrics"],
+                "summary": "Record value metrics",
+                "parameters": [
+                    {
+                        "description": "Value metrics data",
+                        "name": "metrics",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "task_name": {"type": "string"},
+                                "time_saved_minutes": {"type": "number"},
+                                "hourly_rate": {"type": "number"},
+                                "cost_savings": {"type": "number"}
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {"description": "Value metrics recorded successfully"},
+                    "400": {"description": "Bad Request"},
+                    "401": {"description": "Unauthorized"},
+                    "500": {"description": "Internal Server Error"}
+                }
+            }
+        },
+        "/metrics/batch-jobs": {
+            "post": {
+                "security": [{"BearerAuth": []}],
+                "description": "Record batch job execution metrics",
+                "tags": ["Metrics"],
+                "summary": "Record batch job metrics",
+                "parameters": [
+                    {
+                        "description": "Batch job metrics data",
+                        "name": "metrics",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "job_name": {"type": "string"},
+                                "started_at": {"type": "string", "format": "date-time"},
+                                "completed_at": {"type": "string", "format": "date-time"},
+                                "total_records": {"type": "integer"},
+                                "successful_records": {"type": "integer"},
+                                "failed_records": {"type": "integer"}
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {"description": "Batch job metrics recorded successfully"},
+                    "400": {"description": "Bad Request"},
+                    "401": {"description": "Unauthorized"},
+                    "500": {"description": "Internal Server Error"}
+                }
+            }
+        },
+        "/metrics/batch-jobs/{id}": {
+            "get": {
+                "security": [{"BearerAuth": []}],
+                "description": "Retrieve batch job metrics by ID",
+                "tags": ["Metrics"],
+                "summary": "Get batch job metrics",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Batch job ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Batch job metrics found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {"type": "integer"},
+                                "job_name": {"type": "string"},
+                                "started_at": {"type": "string", "format": "date-time"},
+                                "completed_at": {"type": "string", "format": "date-time"},
+                                "total_records": {"type": "integer"},
+                                "successful_records": {"type": "integer"},
+                                "failed_records": {"type": "integer"}
+                            }
+                        }
+                    },
+                    "400": {"description": "Bad Request"},
+                    "401": {"description": "Unauthorized"},
+                    "404": {"description": "Batch job not found"},
+                    "500": {"description": "Internal Server Error"}
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "description": "Type \"Bearer\" followed by a space and API key.",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
