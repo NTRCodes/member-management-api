@@ -1,3 +1,15 @@
+## Overview
+
+This API was designed to support a file processing pipeline that ingests, transforms, and updates member data at scale.
+
+It provides endpoints for:
+- retrieving member records
+- updating and writing processed data
+- supporting reliable data workflows from external processors
+
+This service is used in conjunction with the high-performance file processor:
+https://github.com/NTRCodes/high-performance-file-processor
+
 # Member Management API
 
 > **Note:** This is a sanitized version of a production API built for a membership organization.
