@@ -25,7 +25,7 @@ https://github.com/NTRCodes/high-performance-file-processor
 
 A **production-ready Go API** for member management and metrics tracking.
 
-## 🚀 Features
+## Features
 
 - **Fast & Lightweight** - 72MB Docker image
 - **Complete CRUD API** - Full member management
@@ -34,7 +34,7 @@ A **production-ready Go API** for member management and metrics tracking.
 - **Containerized** - Multi-stage Docker build
 - **Production Tested** - 99.9% uptime
 
-## 📚 API Overview
+## API Overview
 
 ### Member Management
 - `POST /members` - Create new member
@@ -51,7 +51,7 @@ A **production-ready Go API** for member management and metrics tracking.
 - `GET /healthz` - Health check
 - `GET /redoc` - API documentation
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Start with Docker Compose
@@ -67,7 +67,7 @@ go test ./... -coverprofile=coverage.out -v
 go tool cover -func=coverage.out
 ```
 
-## 📊 Performance
+## Performance
 
 - **Member Lookup:** < 50ms (p95)
 - **Metrics Insert:** < 30ms (p95)
